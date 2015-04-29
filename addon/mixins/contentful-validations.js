@@ -1,3 +1,5 @@
+/* global _ */
+
 import Ember from 'ember';
 
 var ContentfulMixin = Ember.Mixin.create({

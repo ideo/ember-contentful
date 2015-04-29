@@ -1,3 +1,5 @@
+/* global _ */
+
 import Ember from 'ember';
 
 // this is intentionally a module variable / used for in-memory caching
@@ -22,7 +24,7 @@ var ContentfulMixin = Ember.Mixin.create({
         })
         .then(function(result) {
           var types = {};
-          window._.each(result.items, function(cType) {
+          _.each(result.items, function(cType) {
             types[cType.sys.id] = cType;
           });
           return types;
@@ -47,7 +49,7 @@ var ContentfulMixin = Ember.Mixin.create({
     locale = locale || 'en-US'; // default fallback
     return this.getContentType(entry.sys.contentType.sys.id)
       .then(function(contentType) {
-        window._.each(contentType.fields, function(field) {
+        _.each(contentType.fields, function(field) {
           if (!field.disabled) {
             if (!entry.fields.hasOwnProperty(field.apiName) || entry.fields[field.apiName] === null) {
               Ember.set(entry, 'fields.' + field.apiName, Ember.Object.create({}));
@@ -74,19 +76,19 @@ var ContentfulMixin = Ember.Mixin.create({
 
   // this reads the predefined values accepted in a field from a given content type definition
   findSymbolOptions: function(contentType, fieldId) {
-    var field = window._.findWhere(contentType.fields, {
+    var field = _.findWhere(contentType.fields, {
       apiName: fieldId
     });
     var options = [];
     if (field.validations) {
-      window._.each(field.validations, function(validation) {
+      _.each(field.validations, function(validation) {
         if (validation['in']) {
           options = validation['in'];
         }
       });
     }
     if (field.items) {
-      window._.each(field.items.validations, function(validation) {
+      _.each(field.items.validations, function(validation) {
         if (validation['in']) {
           options = validation['in'];
         }
