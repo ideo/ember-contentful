@@ -47,6 +47,7 @@ var ContentfulMixin = Ember.Mixin.create({
   // this is a helper method that defines all Entry.fields that Contentful's API response may have omitted. Unfortunately this is necessary to enbale Ember's value bindings and observers to work properly.
   ensureContentFieldsArePresent: function(entry, locale) {
     locale = locale || 'en-US'; // default fallback
+    entry.fields = entry.fields || {};
     return this.getContentType(entry.sys.contentType.sys.id)
       .then(function(contentType) {
         _.each(contentType.fields, function(field) {
