@@ -207,6 +207,49 @@ var ContentfulMixin = Ember.Mixin.create({
               });
           });
       });
+  },
+
+  publishEntry: function(entry) {
+    return this.connectSpace()
+      .then(function(space) {
+        return space.publishEntry(entry)
+          .then(function(result) {
+            Ember.set(entry, 'sys', result.sys);
+            return result;
+          });
+      });
+  },
+
+  unpublishEntry: function(entry) {
+    return this.connectSpace()
+      .then(function(space) {
+        if (entry.sys.publishedAt && !Ember.isEmpty(entry.sys.publishedAt)) {
+          return space
+            .unpublishEntry(entry)
+            .then(function(result) {
+              Ember.set(entry, 'sys', result.sys);
+              return entry;
+            });
+        } else {
+          return entry;
+        }
+      });
+  },
+
+  archiveEntry: function(entry) {
+    return this.connectSpace()
+      .then(function(space) {
+        if (!entry.sys.archivedAt || Ember.isEmpty(entry.sys.archivedAt)) {
+          return space
+            .archiveEntry(entry)
+            .then(function(result) {
+              Ember.set(entry, 'sys', result.sys);
+              return entry;
+            });
+        } else {
+          return entry;
+        }
+      });
   }
 });
 
