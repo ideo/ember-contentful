@@ -4,6 +4,10 @@ import Ember from 'ember';
 
 export
 default Ember.Route.extend({
+
+  queryDepth: 2,
+  queryLimit: 300,
+
   serialize: function(model, params) {
     if (params.length !== 1) {
       return;
@@ -16,9 +20,8 @@ default Ember.Route.extend({
   model: function(params) {
     var spaceId = this.get('session.contentful_space');
     var self = this;
-    var depth = 2;
     return Ember.$
-      .getJSON(this.get('contentfulPreviewHost') + 'spaces/' + spaceId + '/entries?sys.id=' + params.id + '&include=' + depth + '&access_token=' + this.get('contentfulPreviewKey'))
+      .getJSON(this.get('contentfulPreviewHost') + 'spaces/' + spaceId + '/entries?sys.id=' + params.id + '&include=' + this.get('queryDepth') + '&access_token=' + this.get('contentfulPreviewKey'))
       .then(function(result) {
         if (result.total === 0) {
           throw new Error('Not found or not ready');
@@ -45,12 +48,12 @@ default Ember.Route.extend({
             var promises = {};
             promises.entries = space.getEntries({
               'sys.id[in]': [params.id].concat(links.entries),
-              'limit' : 300
+              'limit' : self.get('queryLimit')
             });
             if (links.assets.length > 0) {
               promises.assets = space.getAssets({
                 'sys.id[in]': links.assets,
-                'limit' : 300
+                'limit' : self.get('queryLimit')
               });
             }
             return new Ember.RSVP.hashSettled(promises);
