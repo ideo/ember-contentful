@@ -6,8 +6,8 @@ var ContentfulMixin = Ember.Mixin.create({
 
   // request data from the `editor_interfaces` endpoint for a specific content type (id)
   getEditorUI: function(contentTypeId) {
-    var accessToken = this.get('session.access_token');
-    var spaceId = this.get('session.contentful_space');
+    var accessToken = this.get('session.secure.access_token');
+    var spaceId = this.get('session.secure.contentful_space');
     return Ember.$
       .getJSON(this.get('contentfulHost') + 'spaces/' + spaceId + '/content_types/' + contentTypeId + '/editor_interfaces/default?access_token=' + accessToken);
   },

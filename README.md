@@ -55,9 +55,10 @@ What is in this addon:
 
 * `ember install ember-contentful`
 
-Don't forget the dependencies...
+Don't forget the dependencies...  
+**Important!** As of `0.3.0` the minimum version of Simple Auth is `0.8.0`
 
-* `ember install ember-cli-simple-auth`
+* `ember install ember-cli-simple-auth` 
 * `ember install ember-cli-simple-auth-oauth2`
 * `bower install lodash` and add it to your Brocfile (better solution to come)
 

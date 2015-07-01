@@ -5,7 +5,7 @@ var memcache = {};
 var ContentfulMixin = Ember.Mixin.create({
 
   connectSpace: function() {
-    var spaceId = this.get('session.contentful_space');
+    var spaceId = this.get('session.secure.contentful_space');
 
     if (!spaceId) {
       return new Ember.RSVP.Promise(function(resolve, reject) {
@@ -17,7 +17,7 @@ var ContentfulMixin = Ember.Mixin.create({
       return memcache[spaceId];
     }
 
-    var accessToken = this.get('session.access_token');
+    var accessToken = this.get('session.secure.access_token');
     var client = this.contentfulManagement.createClient({
       accessToken: accessToken,
       secure: true

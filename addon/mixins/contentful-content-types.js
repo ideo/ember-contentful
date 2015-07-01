@@ -12,8 +12,8 @@ var ContentfulMixin = Ember.Mixin.create({
   // load all content type definitions from Contentful
   loadContentTypes: function() {
     if (memcache.contentTypes === null) {
-      var spaceId = this.get('session.contentful_space');
-      var accessToken = this.get('session.access_token');
+      var spaceId = this.get('session.secure.contentful_space');
+      var accessToken = this.get('session.secure.access_token');
       var promise = Ember.$
         .ajax({
           dataType: "json",
