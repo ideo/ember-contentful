@@ -18,7 +18,7 @@ default Ember.Route.extend({
   },
 
   model: function(params) {
-    var spaceId = this.get('session.contentful_space');
+    var spaceId = this.get('session.secure.contentful_space');
     var self = this;
     return Ember.$
       .getJSON(this.get('contentfulPreviewHost') + 'spaces/' + spaceId + '/entries?sys.id=' + params.id + '&include=' + this.get('queryDepth') + '&access_token=' + this.get('contentfulPreviewKey'))
